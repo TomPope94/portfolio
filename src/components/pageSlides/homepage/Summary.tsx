@@ -4,8 +4,8 @@ import Instagram from "@mui/icons-material/Instagram";
 import LinkedIn from "@mui/icons-material/LinkedIn";
 import Twitter from "@mui/icons-material/Twitter";
 import anime from "animejs";
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import { useSwipeable, SwipeEventData } from "react-swipeable";
 
 type summaryProps = {
   setPage: (newPage: number) => void;
@@ -91,13 +91,29 @@ const Summary = ({ ...props }: summaryProps) => {
     }
   }
 
+  async function handleSwipe(e: SwipeEventData) {
+    // opposite direction to scrolling
+    if (e.deltaY < 0 && !changed && loaded) {
+      setChanged(true);
+      await handlePageChange();
+    }
+  }
+
+  const handlers = useSwipeable({
+    onSwipedUp: (e) => handleSwipe(e),
+  });
+
   return (
-    <div className="absolute inset-0 grid grid-cols-6" onWheel={handleScroll}>
+    <div
+      className="absolute inset-0 grid grid-cols-6"
+      onWheel={handleScroll}
+      {...handlers}
+    >
       <div className="relative col-span-6 grid grid-cols-6  bg-gradient-to-tr from-black to-darkBlue text-white">
-        <div className="relative col-span-4 flex h-full items-center justify-center">
-          <div className="anime-container absolute left-32 right-32 top-28 bottom-28 opacity-0">
+        <div className="relative col-span-6 lg:col-span-4 flex h-full items-center justify-center">
+          <div className="anime-container absolute left-4 right-4 lg:left-32 lg:right-32 top-10 bottom-10 lg:top-28 lg:bottom-28 opacity-0">
             <div className="w-fit">
-              <div className="flex w-full justify-between">
+              <div className="flex w-full justify-between items-center">
                 <div className="flex w-1/2 justify-start">
                   <div className="mr-2 cursor-pointer transition duration-500 hover:text-orange">
                     <a href="https://instagram.com">
@@ -118,10 +134,7 @@ const Summary = ({ ...props }: summaryProps) => {
                   Download CV
                 </div>
               </div>
-              <h1
-                className="mt-12 mb-16"
-                style={{ fontSize: "6rem", letterSpacing: 3 }}
-              >
+              <h1 className="mt-12 mb-16 text-8xl">
                 Tom Pope<span className="text-orange">.</span>
               </h1>
             </div>
@@ -132,7 +145,7 @@ const Summary = ({ ...props }: summaryProps) => {
                 </li>
               ))}
             </ul>
-            <p className="italic" style={{ fontSize: "1.25rem" }}>
+            <p className="italic text-sm lg:text-xl">
               &quot;To do something well is so worthwhile that to die trying to
               do it better cannot be foolhardy&quot; - Bruce McLaren
             </p>
@@ -146,7 +159,7 @@ const Summary = ({ ...props }: summaryProps) => {
           <p className="ml-2 italic">Scroll for more...</p>
         </div>
       </div>
-      <div className="anime-container dog-container absolute col-span-2 col-start-5 h-full translate-x-[100%] bg-white py-24 px-16 text-greyStandard opacity-0">
+      <div className="anime-container dog-container hidden lg:inline-block absolute col-span-2 col-start-5 h-full translate-x-[100%] bg-white py-24 px-16 text-greyStandard opacity-0">
         <h3 className="text-center font-primary">
           This is not me... this is Bailey. I make things work... he makes them
           look good.

@@ -7,6 +7,7 @@ import SkillScore from "@/components/skills/SkillScore";
 
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
+import { useSwipeable, SwipeEventData } from "react-swipeable";
 
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 type mySkillsProps = {
@@ -74,10 +75,24 @@ const MySkills = ({ ...props }: mySkillsProps) => {
     }
   }
 
+  function handleSwipe(e: SwipeEventData) {
+    // Inverse of scroll for natural swipe direction
+    if (!changed && loaded) {
+      handlePageChange(e.deltaY < 0);
+      setChanged(true);
+    }
+  }
+
+  const handlers = useSwipeable({
+    onSwipedDown: (e) => handleSwipe(e),
+    onSwipedUp: (e) => handleSwipe(e),
+  });
+
   return (
     <div
       className="background-container absolute inset-0 origin-top bg-gradient-to-tr from-black to-darkBlue text-white"
       onWheel={handleScroll}
+      {...handlers}
     >
       <Particles
         className="z-0"
@@ -187,21 +202,21 @@ const MySkills = ({ ...props }: mySkillsProps) => {
       <div className="anime-container opacity-0">
         <div
           onClick={() => props.setPage(0)}
-          className="absolute top-10 left-32 flex cursor-pointer transition duration-500 hover:text-orange"
+          className="absolute top-4 lg:top-10 left-4 lg:left-32 flex cursor-pointer transition duration-500 hover:text-orange items-center"
         >
           <ArrowUpward />
-          <p className="ml-2 italic">Scroll up for summary...</p>
+          <p className="ml-2 italic">To summary...</p>
         </div>
-        <div className="absolute top-20 bottom-20 left-32 right-32 grid grid-cols-2">
-          <div className="col-span-1 h-full px-8">
-            <h1 className="my-8 text-6xl font-thin">
+        <div className="absolute top-10 xl:top-20 bottom-20 left-4 xl:left-32 right-4 xl:right-32 grid grid-cols-1 lg:grid-cols-2">
+          <div className="col-span-1 h-full lg:pr-20">
+            <h1 className="my-4 lg:my-8 text-4xl lg:text-6xl font-thin">
               My skillset<span className="text-orange">.</span>
             </h1>
-            <p className="italic" style={{ fontSize: "1.25rem" }}>
+            <p className="italic text-sm lg:text-xl">
               &quot;You don&apos;t learn to walk by following rules. You learn
               by doing, and by falling over.&quot; - Richard Branson
             </p>
-            <div className="grid py-10 pr-20">
+            <div className="grid py-4 px-4 lg:py-10 pr-4">
               <SkillScore score={7} title="Front-end" />
               <SkillScore score={8} title="APIs" />
               <SkillScore score={6} title="Cloud engineering" />
@@ -210,9 +225,15 @@ const MySkills = ({ ...props }: mySkillsProps) => {
               <SkillScore score={6} title="Project managing" />
               <SkillScore score={5} title="UX and UI" />
             </div>
+            <div className="w-full pt-4 flex justify-center lg:hidden">
+              <p>Click a catergory above. Or...</p>
+            </div>
+            <div className="my-4 mx-16 cursor-pointer border-2 border-white py-2 transition duration-500 hover:border-orange hover:text-orange flex lg:hidden justify-center">
+              <p style={{ fontSize: "1.25rem" }}>See the tools I use</p>
+            </div>
           </div>
-          <div className="col-start-2 row-start-1 h-full w-px bg-white opacity-50"></div>
-          <div className="col-start-2 row-start-1 flex flex-col items-center justify-center">
+          <div className="hidden lg:inline-block col-start-2 row-start-1 h-full w-px bg-white opacity-50"></div>
+          <div className="hidden lg:flex col-start-2 row-start-1 flex-col items-center justify-center">
             <p className="my-4 italic" style={{ fontSize: "1.25rem" }}>
               Click a category for details
             </p>
@@ -226,10 +247,10 @@ const MySkills = ({ ...props }: mySkillsProps) => {
         </div>
         <div
           onClick={() => handlePageChange(true)}
-          className="anime-container absolute bottom-10 left-32 flex cursor-pointer transition duration-500 hover:text-orange"
+          className="anime-container absolute bottom-4 lg:bottom-10 left-4 lg:left-32 flex cursor-pointer transition duration-500 hover:text-orange"
         >
           <ArrowDownward />
-          <p className="ml-2 italic">Scroll down for my story...</p>
+          <p className="ml-2 italic">To my story...</p>
         </div>
       </div>
     </div>

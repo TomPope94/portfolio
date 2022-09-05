@@ -23,10 +23,8 @@ const SkillScore = ({ ...props }: skillScoreProps) => {
 
   return (
     <div className="group relative grid cursor-pointer grid-cols-2">
-      <div className="col-span-1 my-3 flex items-center justify-end px-8 transition duration-500 group-hover:text-orange">
-        <p className="whitespace-nowrap" style={{ fontSize: "1.25rem" }}>
-          {props.title}:
-        </p>
+      <div className="col-span-1 my-2 flex items-center justify-end px-8 transition duration-500 group-hover:text-orange">
+        <p className="whitespace-nowrap text-lg lg:text-xl">{props.title}:</p>
       </div>
       <div className="col-span-1 my-3 flex w-full items-center justify-evenly">
         {[...Array(props.maxScore || 10).keys()].map((number) => (
