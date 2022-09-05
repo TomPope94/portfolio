@@ -1,0 +1,21 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo Entered the install phase...
+      - apt-get update -y
+      - npm install
+  build:
+    commands:
+      - echo Entered the build phase...
+      - echo Build started on `date`
+      - npm run build
+  post_build:
+    commands:
+      - echo Entered the post_build phase...
+      - echo Build completed on `date`
+artifacts:
+  files:
+    - "**/*"
+  base-directory: "out"
