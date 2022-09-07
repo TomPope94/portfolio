@@ -5,7 +5,6 @@ import LinkedIn from "@mui/icons-material/LinkedIn";
 import Twitter from "@mui/icons-material/Twitter";
 import anime from "animejs";
 import React, { useEffect, useState } from "react";
-import { useSwipeable, SwipeEventData } from "react-swipeable";
 
 type summaryProps = {
   setPage: (newPage: number) => void;
@@ -84,57 +83,40 @@ const Summary = ({ ...props }: summaryProps) => {
     props.setPage(1);
   }
 
-  async function handleScroll(e: React.WheelEvent) {
-    if (e.deltaY > 0 && !changed && loaded) {
-      setChanged(true);
-      await handlePageChange();
-    }
-  }
-
-  async function handleSwipe(e: SwipeEventData) {
-    // opposite direction to scrolling
-    if (e.deltaY < 0 && !changed && loaded) {
-      setChanged(true);
-      await handlePageChange();
-    }
-  }
-
-  const handlers = useSwipeable({
-    onSwipedUp: (e) => handleSwipe(e),
-  });
-
   return (
-    <div
-      className="absolute inset-0 grid grid-cols-6"
-      onWheel={handleScroll}
-      {...handlers}
-    >
+    <div className="absolute inset-0 grid grid-cols-6">
       <div className="relative col-span-6 grid grid-cols-6  bg-gradient-to-tr from-black to-darkBlue text-white">
         <div className="relative col-span-6 lg:col-span-4 flex h-full items-center justify-center">
-          <div className="anime-container absolute left-4 right-4 lg:left-32 lg:right-32 top-10 bottom-10 lg:top-28 lg:bottom-28 opacity-0">
+          <div className="anime-container absolute left-4 right-4 lg:left-32 lg:right-32 top-10 lg:top-16 bottom-10 lg:bottom-16 opacity-0">
             <div className="w-fit">
               <div className="flex w-full justify-between items-center">
                 <div className="flex w-1/2 justify-start">
                   <div className="mr-2 cursor-pointer transition duration-500 hover:text-orange">
-                    <a href="https://instagram.com">
+                    <a href="#">
                       <Instagram />
                     </a>
                   </div>
                   <div className="mr-2 cursor-pointer transition duration-500 hover:text-orange">
-                    <LinkedIn />
+                    <a href="https://www.linkedin.com/in/tom-pope-81ba4399/">
+                      <LinkedIn />
+                    </a>
                   </div>
                   <div className="mr-2 cursor-pointer transition duration-500 hover:text-orange">
-                    <Twitter />
+                    <a href="#">
+                      <Twitter />
+                    </a>
                   </div>
                   <div className="mr-2 cursor-pointer transition duration-500 hover:text-orange">
-                    <GitHub />
+                    <a href="https://github.com/TomPope94">
+                      <GitHub />
+                    </a>
                   </div>
                 </div>
                 <div className="cursor-pointer border-2 border-white px-4 py-2 transition duration-500 hover:border-orange hover:text-orange">
                   Download CV
                 </div>
               </div>
-              <h1 className="mt-12 mb-16 text-8xl">
+              <h1 className="my-14 text-8xl">
                 Tom Pope<span className="text-orange">.</span>
               </h1>
             </div>
@@ -156,7 +138,7 @@ const Summary = ({ ...props }: summaryProps) => {
           className="anime-container absolute bottom-10 left-32 flex cursor-pointer opacity-0 transition duration-500 hover:text-orange"
         >
           <ArrowDownward />
-          <p className="ml-2 italic">Scroll for more...</p>
+          <p className="ml-2 italic">Click here for more...</p>
         </div>
       </div>
       <div className="anime-container dog-container hidden lg:inline-block absolute col-span-2 col-start-5 h-full translate-x-[100%] bg-white py-24 px-16 text-greyStandard opacity-0">

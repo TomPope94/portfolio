@@ -32,12 +32,12 @@
 
   h2,
   .h2 {
-    @apply font-primary text-xl font-thin md:text-3xl;
+    @apply font-title text-xl font-thin md:text-3xl;
   }
 
   h3,
   .h3 {
-    @apply font-primary text-lg font-thin md:text-2xl;
+    @apply font-title text-lg font-thin md:text-2xl;
   }
 
   h4,

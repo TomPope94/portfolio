@@ -18,9 +18,10 @@
     "paths": {
       "@/components/*": ["components/*"],
       "@/pages/*": ["pages/*"],
-      "@/styles/*": ["styles/*"]
+      "@/styles/*": ["styles/*"],
+      "@/constant/*": ["constant/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "types.d.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "types.d.ts", "src/constant/particleDefs.ts"],
   "exclude": ["node_modules"]
 }
